@@ -13,7 +13,7 @@ sed -i 's+^static ip-address=172.27.0.254/24+#static ip-address=172.27.0.254/24+
 sed -i 's/^static routers=172.27.0.1/#static routers=172.27.0.1/' /etc/dhcpcd.conf
 sed -i 's/^static domain_name_servers=172.27.0.1/#static domain_name_servers=172.27.0.1/' /etc/dhcpcd.conf
 sed -i 's/^nolink/#nolink/' /etc/dhcpcd.conf
-sed -i 's/interface wlan0/deny-interfaces wlan0/' /etc/dhcpcd.conf
+sed -i 's/interface wlan0/denyinterfaces wlan0/' /etc/dhcpcd.conf
 sed -i 's/metric 202//' /etc/dhcpcd.conf
 
 cat << EOF > /usr/bin/start-batman-adv.sh
