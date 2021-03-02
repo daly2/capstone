@@ -1,0 +1,6 @@
+IMG_NAME="capstone-s21-ad-hoc"
+TIMEZONE_DEFAULT="America/Chicago"
+LOCALE_DEFAULT="en_US.UTF-8"
+WIFI_ESSID="St. Olaf Guest"
+WIFI_COUNTRY="US"
+ENABLE_SSH=1

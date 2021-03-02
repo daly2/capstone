@@ -1,0 +1,10 @@
+[Unit]
+Description=Start batman interface
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/local/sbin/batman-start.sh
+
+[Install]
+WantedBy=multi-user.target
