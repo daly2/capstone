@@ -14,7 +14,7 @@ make install
 EOF
 
 install -m 644 files/batman-start.service "${ROOTFS_DIR}/etc/systemd/system/batman-start.service"
-install -m 755 files/batman-start.sh "${ROOTFS_DIR}/usr/local/sbin/batman-start.sh"
+install -m 700 files/mesh.sh "${ROOTFS_DIR}/usr/local/sbin/mesh.sh"
 
 on_chroot << EOF
 echo 'batman-adv' >> /etc/modules
@@ -22,10 +22,4 @@ echo 'batman-adv' >> /etc/modules
 systemctl enable batman-start.service
 EOF
 
-install -m 644 files/bat0 "${ROOTFS_DIR}/etc/network/interfaces.d/bat0"
-install -m 644 files/wlan0 "${ROOTFS_DIR}/etc/network/interfaces.d/wlan0"
-
-cat << EOF >> "${ROOTFS_DIR}/etc/dhcpcd.conf"
-
-denyinterfaces wlan0,bat0
-EOF
+echo '172.27.1.2' > /boot/mesh-ip

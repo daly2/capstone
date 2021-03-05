@@ -1,7 +1,0 @@
-auto wlan0
-iface wlan0 inet manual
-    mtu 1532
-    wireless-channel 1
-    wireless-essid cap-net
-    wireless-mode ad-hoc
-    wireless-ap 02:12:34:56:78:9A
