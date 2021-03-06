@@ -1,7 +1,8 @@
-alfred
 cowsay
 emacs
+git
 isc-dhcp-server
+libcap-dev
 libnl-genl-3-dev
 sl
 vim

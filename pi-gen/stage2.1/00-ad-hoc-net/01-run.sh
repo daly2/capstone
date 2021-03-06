@@ -9,7 +9,16 @@ cd /tmp/batctl-install || exit 1
 wget https://downloads.open-mesh.org/batman/stable/sources/batctl/batctl-2020.4.tar.gz
 tar -xf batctl-2020.4.tar.gz
 cd batctl-2020.4 || exit 1
-make
+make install
+EOF
+
+on_chroot << EOF
+mkdir /tmp/alfred-install
+
+cd /tmp/alfred-install || exit 1
+wget https://downloads.open-mesh.org/batman/stable/sources/alfred/alfred-2020.4.tar.gz
+tar -xf alfred-2020.4.tar.gz
+cd alfred-2020.4 || exit 1
 make install
 EOF
 
