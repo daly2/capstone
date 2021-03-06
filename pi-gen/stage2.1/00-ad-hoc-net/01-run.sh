@@ -22,4 +22,4 @@ echo 'batman-adv' >> /etc/modules
 systemctl enable batman-start.service
 EOF
 
-echo '172.27.1.2' > /boot/mesh-ip
+echo '172.27.1.2' > "${ROOTFS_DIR}/boot/mesh-ip"
