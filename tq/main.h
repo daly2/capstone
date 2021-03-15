@@ -1,7 +1,22 @@
+/**
+ * Parts of this program are copied from and/or heavily influenced by batctl
+ *  and have the following copyright:
+ *
+ * SPDX-License-Identifier: GPL-2.0
+ * Copyright (C) B.A.T.M.A.N. contributors:
+ *
+ * Andreas Langer <an.langer@gmx.de>, Marek Lindner <mareklindner@neomailbox.ch>
+ *
+ * License-Filename: LICENSES/preferred/GPL-2.0
+ *
+ */
+
 #ifndef TQ_MAIN_H
 #define TQ_MAIN_H
 
 #include <getopt.h>
+#include <inttypes.h>
+#include <math.h>
 #include <net/ethernet.h>
 #include <net/if.h>
 #include <netlink/genl/ctrl.h>
@@ -10,9 +25,15 @@
 #include <netlink/netlink.h>
 #include <netlink/types.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 #include <unistd.h>
 
-// batman_adv.c
+/**
+ * Tracks which indices correspond to which data points in a batman-adv message
+ * Copied from batman_adv.c
+ */
 enum batadv_nl_attrs {
     /**
      * @BATADV_ATTR_UNSPEC: unspecified attribute to catch errors
@@ -374,7 +395,10 @@ enum batadv_nl_attrs {
     BATADV_ATTR_MAX = __BATADV_ATTR_AFTER_LAST - 1
 };
 
-// main.h
+/**
+ * Used in batctl to indicate that an argument in a callback will always be null
+ * Copied from main.h
+ */
 #define __maybe_unused __attribute__((unused))
 
 #endif  // TQ_MAIN_H
