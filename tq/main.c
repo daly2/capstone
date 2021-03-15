@@ -209,7 +209,7 @@ int main(int argc, char** argv) {
     }
 
     struct opts options = {
-        .file_name = "data",
+        .file_name = "data.csv",
     };
 
     //////// netlink.c netlink_create
