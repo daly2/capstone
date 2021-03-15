@@ -3,6 +3,7 @@ emacs
 git
 isc-dhcp-server
 libcap-dev
+libgps-dev
 libnl-genl-3-dev
 sl
 vim
