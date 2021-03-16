@@ -10,7 +10,8 @@ void mac_to_str(char* mac_str, uint8_t* mac) {
 
 /**
  * Save TQ data to csv file
- * Data is formatted as MAC,TQ,DATE
+ * 
+ * Data is formatted as mac,tq,recv_time
  */
 void save_tq(char* file_name, uint8_t* mac, int tq, char* recv_time) {
     char mac_str[18];
@@ -23,8 +24,9 @@ void save_tq(char* file_name, uint8_t* mac, int tq, char* recv_time) {
 }
 
 /**
- * Save data to csv file
- * Data is formatted as MAC,TQ,DATE
+ * Save line to csv file
+ * 
+ * Data is formatted as mac,tq,recv_time
  */
 void save_line_to_file(char* file_name, char* mac, char* tq, char* recv_time, enum open_mode open_mode) {
     FILE* out;
@@ -40,6 +42,9 @@ void save_line_to_file(char* file_name, char* mac, char* tq, char* recv_time, en
     fclose(out);
 }
 
+/**
+ * Print an error message and exit with code
+ */
 __THROW __attribute__ ((__noreturn__)) void throw_error(enum error_code code, const char* message_fmt, ...) {
     va_list args;
     va_start(args, message_fmt);

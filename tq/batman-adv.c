@@ -1,7 +1,21 @@
+/**
+ * Parts of this program are copied from and/or heavily influenced by batctl
+ *  and have the following copyright:
+ *
+ * SPDX-License-Identifier: GPL-2.0
+ * Copyright (C) B.A.T.M.A.N. contributors:
+ *
+ * Andreas Langer <an.langer@gmx.de>, Marek Lindner <mareklindner@neomailbox.ch>
+ *
+ * License-Filename: LICENSES/preferred/GPL-2.0
+ *
+ */
+
 #include "batman-adv.h"
 
 /**
  * Format of a batman-adv message received from netlink
+ * 
  * Copied from netlink.c
  */
 struct nla_policy batadv_netlink_policy[NUM_BATADV_ATTR] = {

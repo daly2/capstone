@@ -14,23 +14,11 @@
 #include "batman-adv.h"
 #include "util.h"
 
-/**
- * What to do when an error occurs during communcation
- * Copied from netlink.c
- */
 int netlink_print_error(struct sockaddr_nl* nla __maybe_unused,
                         struct nlmsgerr* nlerr, void* arg __maybe_unused);
 
-/**
- * What to do when communications are stopped (idk when this happens)
- * Copied from netlink.c
- */
 int netlink_stop_callback(struct nl_msg* msg, void* arg __maybe_unused);
 
-/**
- * Process data received from kernel
- * Based on originators_callback in originators.c
- */
 int tq_callback(struct nl_msg* msg, void* arg);
 
 void netlink_comm_loop(struct opts* options);

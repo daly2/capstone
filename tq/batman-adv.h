@@ -20,6 +20,7 @@
 
 /**
  * Tracks which indices correspond to which data points in a batman-adv message
+ * 
  * Copied from batman_adv.c
  */
 enum batadv_nl_attrs {
@@ -387,6 +388,7 @@ extern struct nla_policy batadv_netlink_policy[NUM_BATADV_ATTR];
 
 /**
  * Used in batctl to indicate that an argument in a callback will always be null
+ * 
  * Copied from main.h
  */
 #define __maybe_unused __attribute__((unused))

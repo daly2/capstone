@@ -1,8 +1,22 @@
+/**
+ * Parts of this program are copied from and/or heavily influenced by batctl
+ *  and have the following copyright:
+ *
+ * SPDX-License-Identifier: GPL-2.0
+ * Copyright (C) B.A.T.M.A.N. contributors:
+ *
+ * Andreas Langer <an.langer@gmx.de>, Marek Lindner <mareklindner@neomailbox.ch>
+ *
+ * License-Filename: LICENSES/preferred/GPL-2.0
+ *
+ */
+
 #include "netlink.h"
 
 /**
  * What to do when an error occurs during communcation
- * Copied from netlink.c
+ *
+ * Based on netlink.c: netlink_print_error
  */
 int netlink_print_error(struct sockaddr_nl* nla __maybe_unused,
                         struct nlmsgerr* nlerr, void* arg __maybe_unused) {
@@ -14,8 +28,9 @@ int netlink_print_error(struct sockaddr_nl* nla __maybe_unused,
 }
 
 /**
- * What to do when communications are stopped (idk when this happens)
- * Copied from netlink.c
+ * What to do when communications are stopped
+ *
+ * Based on netlink.c: netlink_stop_callback
  */
 int netlink_stop_callback(struct nl_msg* msg, void* arg __maybe_unused) {
     struct nlmsghdr* nlh = nlmsg_hdr(msg);
@@ -27,8 +42,13 @@ int netlink_stop_callback(struct nl_msg* msg, void* arg __maybe_unused) {
     return NL_STOP;
 }
 
+/**
+ * Process data received from the kernel
+ *
+ * Based on originators.c: originators_callback
+ */
 int tq_callback(struct nl_msg* msg, void* arg) {
-    struct nlattr* attrs[61];
+    struct nlattr* attrs[NUM_BATADV_ATTR];
     struct nlmsghdr* nlh = nlmsg_hdr(msg);
     struct genlmsghdr* ghdr;
 
@@ -64,48 +84,52 @@ int tq_callback(struct nl_msg* msg, void* arg) {
         // Save data to file
         save_tq(options->file_name, orig, tq, recv_time);
     } else if (options->mode == PRINT) {
+        // Convert MAC to string
         char mac_str[18];
         mac_to_str(mac_str, orig);
+
+        // Compare MAC, and if it matches, print the TQ
         if (strcmp(options->mac, mac_str) == 0) printf("%d\n", tq);
-    } else {
-    }
+    } else
+        throw_error(UNDEFINED_BEHAVIOR_ERR, "Unrecognized program mode: %d",
+                    options->mode);
 
     return NL_OK;
 }
 
+/**
+ * Communicate with the kernel and request the TQ data
+ *
+ * Based on:
+ *  functions.c: check_mesh_iface
+ *  netlink.c: netlink_create netlink_print_common
+ */
 void netlink_comm_loop(struct opts* options) {
-    // Prepare for communication
-
-    /// Based on functions.c - check_mesh_iface
+    // Find interface index
     unsigned int mesh_ifindex = if_nametoindex("bat0");
 
-    /// Based on netlink.c - netlink_create
+    // Create and connect nl_sock
     struct nl_sock* sock = nl_socket_alloc();
     if (!sock) throw_error(NL_ALLOC_ERR, "Error creating nl_sock\n");
     genl_connect(sock);
 
-    /// Based on netlink.c - netlink_create
+    // Create nl_cb
     struct nl_cb* cb = nl_cb_alloc(NL_CB_DEFAULT);
     if (!cb) throw_error(NL_ALLOC_ERR, "Error creating nl_cb\n");
 
-    /// Based on netlink.c - netlink_create
+    // Determine family for later use
     int batadv_family = genl_ctrl_resolve(sock, "batadv");
 
     // Set up callbacks for receiving data
-
-    struct nl_msg* msg;
-
-    /// Based on/copied from netlink.c - netlink_print_common
     nl_cb_set(cb, NL_CB_VALID, NL_CB_CUSTOM, tq_callback, options);
     nl_cb_set(cb, NL_CB_FINISH, NL_CB_CUSTOM, netlink_stop_callback, NULL);
     nl_cb_err(cb, NL_CB_CUSTOM, netlink_print_error, NULL);
 
+    // Assumption: this program will not be run for over 4.3 billion iterations
+    unsigned int i = 0;
+
     // Ask kernel for data (data is processed in the callback)
-
-    unsigned int i = 0;  // Assumption: this program will not be run for
-                         // over 4.3 billion iterations
-
-    /// Based on netlink.c - netlink_print_common
+    struct nl_msg* msg;
     while (options->repetitions == -1 || i < options->repetitions) {
         msg = nlmsg_alloc();
         if (!msg) throw_error(NL_ALLOC_ERR, "Error creating nl_msg\n");

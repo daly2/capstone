@@ -1,19 +1,12 @@
-/**
- * Parts of this program are copied from and/or heavily influenced by batctl
- *  and have the following copyright:
- *
- * SPDX-License-Identifier: GPL-2.0
- * Copyright (C) B.A.T.M.A.N. contributors:
- *
- * Andreas Langer <an.langer@gmx.de>, Marek Lindner <mareklindner@neomailbox.ch>
- *
- * License-Filename: LICENSES/preferred/GPL-2.0
- *
- */
-
 #include "gettq.h"
 
 int main(int argc, char** argv) {
+    if (argc < 2) throw_error(ARGUMENT_ERR, "MAC address is required");
+    int mac_len = strlen(argv[1]);
+    if (mac_len > 12) throw_error(ARGUMENT_ERR, "Invalid MAC address %s: too long\nPlease do not use any colons\n", argv[1]);
+    else if (mac_len < 12) throw_error(ARGUMENT_ERR, "Invalid MAC address %s: too short\n", argv[1]);
+
+    // Print one TQ for $mac to stdout
     struct opts options = {
         .mode = PRINT,
         .repetitions = 1,

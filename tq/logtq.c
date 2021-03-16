@@ -1,16 +1,3 @@
-/**
- * Parts of this program are copied from and/or heavily influenced by batctl
- *  and have the following copyright:
- *
- * SPDX-License-Identifier: GPL-2.0
- * Copyright (C) B.A.T.M.A.N. contributors:
- *
- * Andreas Langer <an.langer@gmx.de>, Marek Lindner <mareklindner@neomailbox.ch>
- *
- * License-Filename: LICENSES/preferred/GPL-2.0
- *
- */
-
 #include "logtq.h"
 
 int main(int argc, char** argv) {
@@ -20,7 +7,6 @@ int main(int argc, char** argv) {
     strcpy(file_name, "./tqdata.csv");
 
     // Parse arguments
-
     int optchar;
     while ((optchar = getopt(argc, argv, "+cf:r:w:")) != -1) {
         switch (optchar) {
@@ -52,6 +38,7 @@ int main(int argc, char** argv) {
         }
     }
 
+    // Log TQ values to $file_name every $wait seconds, $repetitions times
     struct opts options = {
         .mode = LOG,
         .file_name = file_name,
@@ -60,7 +47,6 @@ int main(int argc, char** argv) {
     };
 
     // Clear output file and add header
-
     save_line_to_file(options.file_name, "MAC", "TQ", "TIME", WRITE);
 
     netlink_comm_loop(&options);
