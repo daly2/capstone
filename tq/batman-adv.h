@@ -14,21 +14,9 @@
 #ifndef TQ_BATMAN_ADV_H
 #define TQ_BATMAN_ADV_H
 
-#include <getopt.h>
-#include <inttypes.h>
-#include <math.h>
 #include <net/ethernet.h>
-#include <net/if.h>
-#include <netlink/genl/ctrl.h>
-#include <netlink/genl/genl.h>
 #include <netlink/msg.h>
 #include <netlink/netlink.h>
-#include <netlink/types.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <unistd.h>
 
 /**
  * Tracks which indices correspond to which data points in a batman-adv message

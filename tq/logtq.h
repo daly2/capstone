@@ -11,26 +11,14 @@
  *
  */
 
-#ifndef TQ_MAIN_H
-#define TQ_MAIN_H
+#ifndef TQ_LOG_TQ_H
+#define TQ_LOG_TQ_H
 
 #include <getopt.h>
-#include <inttypes.h>
-#include <math.h>
-#include <net/ethernet.h>
-#include <net/if.h>
-#include <netlink/genl/ctrl.h>
-#include <netlink/genl/genl.h>
-#include <netlink/msg.h>
-#include <netlink/netlink.h>
-#include <netlink/types.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-#include <unistd.h>
 
-#include "batman-adv.h"
+#include "netlink.h"
 #include "util.h"
 
-#endif  // TQ_MAIN_H
+#endif  // TQ_LOG_TQ_H
